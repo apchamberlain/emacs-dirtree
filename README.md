@@ -4,9 +4,13 @@ Original [here](http://code.google.com/p/ywb-codes/source/browse/trunk/emacs/sit
 
 ## Installation
 
-1. Install deps
-2. download `dirtree.el` to your `emacs.d` directory.
-3. `(require 'dirtree)`
+2. Download `tree-mode.el`, `windata.el`, and `dirtree.el` to `DIRECTORY`.
+3. Add to your Emacs init file (`.emacs`, `init.el`, etc.):
+
+       `(add-to-list 'load-path "DIRECTORY"` 
+       `(require 'dirtree)`
+
+4. Optionally, see [Additional Customization][customize] below.
 
 ## Requires
 
@@ -19,8 +23,46 @@ Original [here](http://code.google.com/p/ywb-codes/source/browse/trunk/emacs/sit
 * `M-x dirtree-in-buffer RET` -- Opens dirtree in a buffer in the current
    window.
 
+## Default keybindings
 
-## Eproject Integration
+### From `tree-mode.el`
+	
+        <space>    scroll-up
+        <ctrl> ?   scroll-down
+        D          tree-mode-delete-tree
+        p          tree-mode-previous-node
+        n          tree-mode-next-node
+        j          tree-mode-next-sib
+        k          tree-mode-previous-sib
+        u          tree-mode-goto-parent
+        r          tree-mode-goto-root
+        g          tree-mode-refresh
+        E          tree-mode-expand-level
+        e          tree-mode-toggle-expand
+        s          tree-mode-sort-by-tag
+        /          tree-mode-keep-match
+        !          tree-mode-collapse-other-except
+
+### From `dirtree.el`
+
+        o          dirtree-open-file
+        <ctrl> o   dirtree-open-file-other-window
+	    q          close buffer and kill window
+
+The `<return>` key is also bound to act as a "smart click."  If the
+cursor is on a folder icon, `<return>` toggles or untoggles the display
+of the directory contents (`tree-mode-toggle-expand`).  If the cursor
+is on a file icon, `<return>` opens the file in another window
+(`dirtree-open-file-other-window`).
+
+You can also use the cursor keys or mouse for navigation.
+
+
+[customize]: #customize
+
+## Additional Customization
+
+### Eproject Integration
 
 Opens dirtree with the root pointing at the current eproject root.
 
@@ -28,6 +70,20 @@ Opens dirtree with the root pointing at the current eproject root.
       (interactive)
       (dirtree-in-buffer eproject-root t))
 
+### Cursor Key / Return Navigation
+
+The following code makes navigation with the cursor keys and
+`<return>` as described above under **Default Keybindings** work
+better, since the cursor will always stay on the folder/file icon:
+
+	(add-hook 'dirtree-mode-hook
+			  (lambda ()
+				(add-hook 'post-command-hook
+						  (lambda ()
+							(ignore-errors
+							  (beginning-of-line)
+							  (while (not (widget-at)) (forward-char 1))))
+						  "at-end" "local-to-buffer")))
 
 ## License
 
