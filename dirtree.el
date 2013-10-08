@@ -201,8 +201,12 @@ With prefix arguement select `dirtree-buffer'"
     (if (setq file (widget-get widget :file))
         (find-file-other-window file))))
 
+
 (define-key dirtree-mode-map "o" 'dirtree-open-file)
 (define-key dirtree-mode-map "\C-o" 'dirtree-open-file-other-window)
+(define-key dirtree-mode-map "q" 
+  (lambda nil (interactive) (kill-buffer (buffer-name))))
+
 
 (provide 'dirtree)
 ;;; dirtree.el ends here
