@@ -1,6 +1,8 @@
 # dirtree.el -- Directory tree views for Emacs
 
-Original [here](http://code.google.com/p/ywb-codes/source/browse/trunk/emacs/site-lisp/contrib/dirtree.el).
+Original here:
+* [Google Code (deprecated)](http://code.google.com/p/ywb-codes/source/browse/trunk/emacs/site-lisp/contrib/dirtree.el).
+* [EmacsWiki](http://www.emacswiki.org/emacs/dirtree.el)
 
 ## Installation
 
